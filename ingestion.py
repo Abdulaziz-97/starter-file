@@ -43,7 +43,7 @@ def merge_multiple_dataframe():
     final_df.to_csv(os.path.join(output_folder_path, 'finaldata.csv'), index=False)
 
     with open(os.path.join(output_folder_path, 'ingestedfiles.txt'), 'w') as f:
-        f.write(files + "\n")
+        f.write('\n'.join(files))
 
- if __name__ == '__main__':
+if __name__ == '__main__':
     merge_multiple_dataframe()
