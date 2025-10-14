@@ -33,7 +33,8 @@ def train_model():
                     warm_start=False)
         model.fit(X, y)
         model_file = os.path.join(model_path, 'trainedmodel.pkl')
-        pickle.dump(model, open(model_file, 'wb'))
+        with open(model_file, 'wb') as f:   
+            pickle.dump(model, f)
 
         print("Model trained and saved")
     #fit the logistic regression to your data
