@@ -15,7 +15,8 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
-test_data_path = os.path.join(config['test_data_path']) 
+test_data_path = os.path.join(config['test_data_path'])
+model_path = os.path.join(config['output_model_path']) 
 
 
 #################Function for model scoring
@@ -38,3 +39,7 @@ def score_model():
         f.write(str(f1_score))
     print("F1 score written to", score_file)
     return f1_score
+
+
+if __name__ == '__main__':
+    score_model()

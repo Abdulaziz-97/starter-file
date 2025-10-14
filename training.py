@@ -48,7 +48,7 @@ def train_model():
         pickle.dump(model, f)
     
     print(f"Model trained and saved to {model_file}")
-    #fit the logistic regression to your data
-    
-    #write the trained model to your workspace in a file called trainedmodel.pkl
 
+
+if __name__ == '__main__':
+    train_model()
