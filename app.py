@@ -24,27 +24,38 @@ prediction_model = None
 
 #######################Prediction Endpoint
 @app.route("/prediction", methods=['POST','OPTIONS'])
-def predict():        
-    #call the prediction function you created in Step 3
-    return #add return value for prediction outputs
+def predict():
+    filepath = request.get_json()['filepath']
 
-#######################Scoring Endpoint
+    prediction = diagnostics.model_predictions(filepath)
+
+    return jsonify(prediction), 200
+
 @app.route("/scoring", methods=['GET','OPTIONS'])
-def stats():        
+def scoring():        
     #check the score of the deployed model
-    return #add return value (a single F1 score number)
+    stats = scoring.score_model()
+    return jsonify(stats), 200
 
 #######################Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
-def stats():        
+def summary_stats():        
     #check means, medians, and modes for each column
-    return #return a list of all calculated summary statistics
+    stats = diagnostics.dataframe_summary()
+    return jsonify(stats), 200
 
 #######################Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
-def stats():        
-    #check timing and percent NA values
-    return #add return value for all diagnostics
+def diagnose():
+    timing = diagnostics.execution_time()
+    missing = diagnostics.missing_data()
+    dependencies = diagnostics.outdated_packages_list()
+    
+    return jsonify({
+        'timing': timing,
+        'missing_data': missing,
+        'dependencies': dependencies
+    }), 200
 
 if __name__ == "__main__":    
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
