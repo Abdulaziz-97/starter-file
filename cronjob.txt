@@ -1,0 +1,2 @@
+*/10 * * * * cd /home/ubuntu/starter-file && /usr/bin/python3 fullprocess.py >> /home/ubuntu/starter-file/cron.log 2>&1
+

@@ -14,7 +14,10 @@ import os
 with open('config.json','r') as f:
     config = json.load(f) 
 
-dataset_csv_path = os.path.join(config['output_folder_path']) 
+dataset_csv_path = os.path.join(config['output_folder_path'])
+test_data_path = os.path.join(config['test_data_path'])
+prod_deployment_path = os.path.join(config['prod_deployment_path'])
+model_path = os.path.join(config['output_model_path']) 
 
 
 
@@ -22,14 +25,14 @@ dataset_csv_path = os.path.join(config['output_folder_path'])
 ##############Function for reporting
 def score_model():
     # Load test data
-    test_file = os.path.join(dataset_csv_path, 'testdata.csv')
+    test_file = os.path.join(test_data_path, 'testdata.csv')
     test_df = pd.read_csv(test_file)
     X_test = test_df[['lastmonth_activity', 'lastyear_activity', 
                       'number_of_employees']]
     y_test = test_df['exited']
     
     # Load deployed model
-    model_file = os.path.join(model_path, 'trainedmodel.pkl')
+    model_file = os.path.join(prod_deployment_path, 'trainedmodel.pkl')
     with open(model_file, 'rb') as f:
         model = pickle.load(f)
     

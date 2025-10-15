@@ -2,11 +2,10 @@ from flask import Flask, session, jsonify, request
 import pandas as pd
 import numpy as np
 import pickle
-import create_prediction_model
-import diagnosis 
-import predict_exited_from_saved_model
 import json
 import os
+import diagnostics
+import scoring
 
 
 
@@ -32,10 +31,13 @@ def predict():
     return jsonify(prediction), 200
 
 @app.route("/scoring", methods=['GET','OPTIONS'])
-def scoring():        
+def score():        
     #check the score of the deployed model
-    stats = scoring.score_model()
-    return jsonify(stats), 200
+    # Read the score from production deployment
+    score_file = os.path.join(config['prod_deployment_path'], 'latestscore.txt')
+    with open(score_file, 'r') as f:
+        score_value = float(f.read())
+    return jsonify(score_value), 200
 
 #######################Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
